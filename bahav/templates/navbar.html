@@ -1,0 +1,35 @@
+<div class="navbar">
+  <div class="ui white small menu">
+
+      <a href="/" class="item header">bahav</a>
+      <div class="ui selection dropdown item">
+        <input type="hidden" name="country">
+        <div class="text">
+        {% if user.is_authenticated() %}
+          <i class="{{ user.country.code | lower }} flag"></i>{{ user.country.name }}
+        {% else %}
+          <i class="in flag"></i>India
+        {% endif %}
+        </div>
+
+        <div class="menu">
+          {# list_countries #}
+        </div>
+      </div>
+
+      <div class="right menu">
+      {% if user.is_authenticated() %}
+        <a href="{{ url('account') }}" class="item">{{ user.username }}</a>
+        <div class="item">
+          <a href="{{ url('logout') }}" class="ui button">Logout</a>
+        </div>
+      {% else %}
+        <a href="{{ url('signup') }}" class="item">Signup</a>
+        <div class="item">
+          <a href="{{ url('login') }}" class="ui primary button">Login</a>
+        </div>
+      {% endif %}
+      </div>
+
+  </div>
+</div>

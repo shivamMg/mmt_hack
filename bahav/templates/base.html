@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <title>bahav</title>
+
+    {% block stylesheets %}
+    <link rel="stylesheet" type="text/css" href="{{ static('base/css/lato-fonts.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ static('lib/semantic/dist/semantic.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ static('base/css/main.css') }}">
+    {% endblock %}
+  </head>
+  <body>
+    {% include 'navbar.html' %}
+
+    {% block content %}{% endblock %}
+
+    {% include 'footer.html' %}
+
+    {% block scripts %}
+    <script type="text/javascript" src="{{ static('lib/jquery/dist/jquery.min.js') }}"></script>
+    <script type="text/javascript" src="{{ static('lib/semantic/dist/semantic.min.js') }}"></script>
+    <script type="text/javascript" src="{{ static('base/js/main.js') }}"></script>
+    {% endblock %}
+  </body>
+</html>

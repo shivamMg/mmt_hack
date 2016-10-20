@@ -1,0 +1,43 @@
+body {
+  background-color: #f6f0ee;
+}
+
+a:hover {
+  color: #2b1b17;
+}
+
+.midnight-bg {
+  background-color: #2b1b17 !important;
+}
+
+.ui.primary.button {
+  background-color: #422a24;
+}
+
+.ui.primary.button:hover {
+  background-color: #2b1b17;
+}
+
+.upper-margin {
+  margin-top: 4em !important;
+}
+
+.field-error {
+  font-size: 10px;
+  color: #b71c1c;
+}
+
+.navbar > .ui.menu > .ui.selection.dropdown {
+  border: 0px;
+  border-radius: 0px;
+  min-width: 17em;
+}
+
+.navbar > .ui.menu > .ui.selection.dropdown .menu {
+  max-height: 20rem;
+}
+  
+.ui.footer.segment {
+  margin: 5em 0em 0em;
+  padding: 5em 0em;
+}

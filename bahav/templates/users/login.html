@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% block stylesheets %}
+{{ super() }}
+<style>
+  body > .grid {
+    height: 100%;
+  }
+  .column {
+    max-width: 450px;
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="ui middle aligned center aligned grid">
+  <div class="column">
+
+  {% if form.errors %}
+    <div class="ui error message">
+      Your username and password didn't match. Please try again.
+    </div>
+  {% endif %}
+
+  {% if next %}
+      {% if user.is_authenticated() %}
+      <div class="ui error message">
+        Your account doesn't have access to this page. To proceed,
+        please login with an account that has access.
+      </div>
+      {% else %}
+      <div class="ui error message">
+        Please login to see this page.
+      </div>
+      {% endif %}
+  {% endif %}
+
+  <form class="ui form" method="post" action="{{ url('login') }}">
+  {% csrf_token %}
+
+    <div class="ui segment left aligned">
+      <h2 class="ui dividing header">Login</h2>
+
+      <div class="field">
+          {{ form.username.label_tag() }}
+          {{ form.username }}
+      </div>
+      <div class="field">
+        {{ form.password.label_tag() }}
+        {{ form.password }}
+      </div>
+      <div class="field">
+        <button class="ui fluid primary large button" type="submit">Login</button>
+      </div>
+    </div>
+
+    <input type="hidden" name="next" value="{{ next }}" />
+  </form>
+
+  <div class="ui info message">
+    New user? You can create an account <a href="{{ url('signup') }}">here</a>.
+  </div>
+
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block stylesheets %}
+{{ super() }}
+<style type="text/css">
+  .masthead.segment {
+    min-height: 700px;
+    padding: 1em 0em;
+  }
+  .masthead .logo.item img {
+    margin-right: 1em;
+  }
+  .masthead .ui.menu .ui.button {
+    margin-left: 0.5em;
+  }
+  .masthead h1.ui.header {
+    margin-top: 3em;
+    margin-bottom: 0em;
+    font-size: 3em;
+    font-weight: normal;
+  }
+  .masthead h2 {
+    font-size: 1.7em;
+    font-weight: normal;
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="ui inverted vertical masthead center aligned segment midnight-bg">
+  <div class="ui text container">
+    <h1 class="ui inverted header">
+      bahav
+    </h1>
+    <h2>#TinderForTravellers</h2>
+  </div>
+</div>
+
+{% endblock %}

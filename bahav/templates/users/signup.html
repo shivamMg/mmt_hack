@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+
+{% block stylesheets %}
+{{ super() }}
+<style>
+  body > .grid {
+    height: 100%;
+  }
+  .column {
+    max-width: 400px;
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="ui middle aligned center aligned grid">
+  <div class="column">
+
+<form class="ui form" method="post" action="{{ url('signup') }}">
+{% csrf_token %}
+
+  <div class="ui segment left aligned">
+    <h2 class="ui dividing header">Sign up for an account</h2>
+
+    <div class="">
+    {% for field in form %}
+      <div class="field">
+        {{ field.label_tag() }}
+        <span class="field-error">{{ field.errors.as_text() }}</span>
+        {% if field.name == 'country' %}
+          <div class="ui fluid search selection dropdown">
+            {{ field }}
+            <i class="dropdown icon"></i>
+            <div class="default text">Your Country</div>
+            <div class="menu">
+              {% for country in list_countries() %}
+                <div class="item" data-value="{{ country.code }}" title="{{ country.name }}, {{ country.continent.name }}">
+                  <i class="{{ country.code|lower }} flag"></i>{{ country.name }}
+                </div>
+              {% endfor %}
+            </div>
+          </div>
+        {% else %}
+          {{ field }}
+        {% endif %}
+      </div>
+    {% endfor %}
+
+      <div class="field">
+        <button class="ui primary fluid button" type="submit">Signup</button>
+      </div>
+    </div>
+  </div>
+
+  <input type="hidden" name="next" value="{{ next }}" />
+</form>
+
+<div class="ui info message">
+  Already have an account? Login <a href="{{ url('login') }}">here</a>.
+</div>
+
+  </div>
+</div>
+
+{% endblock %}

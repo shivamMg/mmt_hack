@@ -1,0 +1,16 @@
+# Bytecode and cache
+__pycache__/
+*.py[cod]
+
+# Virtualenv
+venv/
+.env
+
+# Local Configuration
+conf/
+
+# Media Root
+media_root/
+
+# Bower Components
+lib/

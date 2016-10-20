@@ -1,0 +1,23 @@
+{
+  "name": "bahav",
+  "version": "0.0.0",
+  "homepage": "https://github.com/shivamMg/mmt_hack",
+  "authors": [
+    "Shivam Mamgain <shivammamgain47@gmail.com>"
+  ],
+  "description": "",
+  "main": "",
+  "moduleType": [],
+  "license": "custom",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "semantic": "~2.2.4"
+  }
+}
