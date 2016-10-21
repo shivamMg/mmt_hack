@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block stylesheets %}
+{{ super() }}
+<link rel="stylesheet" type="text/css" href="{{ static('lib/semantic-ui-calendar/dist/calendar.min.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="ui segment">
+  <div class="ui container">
+  {% include 'profiles/_profile_search_form.html' %}
+  </div>
+</div>
+
+<div>
+  <div class="ui segment" style="min-height: 200px;">
+    <div class="ui cards">
+    {% for profile in profile_list %}
+      <div class="card">
+        <div class="content">
+          <div class="header">{{ profile.src_country.name }}</div>
+          <div class="meta">{{ profile.dest_country.name }}</div>
+          <div class="description">
+            <ul>
+              <li>{{ profile.range_start }}</li>
+              <li>{{ profile.range_end }}</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    {% else %}
+    <div>
+        Sorry no Journies match the above parameters. You can <a href="">create your own journey</a>.
+    </div>
+    {% endfor %}
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+
+<script type="text/javascript" src="{{ static('lib/semantic-ui-calendar/dist/calendar.min.js') }}"></script>
+<script type="text/javascript">
+  $('#departure-date').calendar({
+    type: 'date',
+    formatter: {
+      date: function (date, settings) {
+        if (!date) return '';
+        var day = date.getDate();
+        var month = date.getMonth() + 1;
+        var year = date.getFullYear();
+        return month + '/' + day + '/' + year;
+      }
+    }
+  });
+</script>
+{% endblock %}

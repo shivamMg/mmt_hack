@@ -18,6 +18,7 @@
     "tests"
   ],
   "dependencies": {
-    "semantic": "~2.2.4"
+    "semantic": "~2.2.4",
+    "semantic-ui-calendar": "~0.0.2"
   }
 }

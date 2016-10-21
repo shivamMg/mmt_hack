@@ -1,0 +1,5 @@
+{% for country in list_countries() %}
+  <div class="item" data-value="{{ country.code }}" title="{{ country.name }}, {{ country.continent.name }}">
+    <i class="{{ country.code|lower }} flag"></i>{{ country.name }}
+  </div>
+{% endfor %}

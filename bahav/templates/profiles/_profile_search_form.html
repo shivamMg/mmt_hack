@@ -1,0 +1,39 @@
+<form method="get" action="{{ url('profiles:search') }}">
+<div class="ui form">
+  <div class="two fields">
+    <div class="field">
+      <div class="ui fluid search selection dropdown">
+        {{ search_form.src_country }}
+        <i class="dropdown icon"></i>
+        <div class="default text"> Source Country</div>
+        <div class="menu">
+          {% include 'country_list.html' %}
+        </div>
+      </div>
+    </div>
+    <div class="field">
+      <div class="ui fluid search selection dropdown">
+        {{ search_form.dest_country }}
+        <i class="dropdown icon"></i>
+        <div class="default text">Destination Country</div>
+        <div class="menu">
+          {% include 'country_list.html' %}
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="two fields">
+    <div class="field">
+      <div class="ui calendar" id="departure-date">
+        <div class="ui input left icon">
+          <i class="calendar icon"></i>
+          {{ search_form.departure_date }}
+        </div>
+      </div>
+    </div>
+    <div class="field">
+      <button class="ui fluid button">Go</button>
+    </div>
+  </div>
+</div>
+</form>

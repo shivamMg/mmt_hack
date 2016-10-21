@@ -13,15 +13,15 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
-from django.conf.urls import url
+from django.conf.urls import url, include
 from django.contrib.auth import views as auth_views
-from django.views.generic import TemplateView
 
 from users import views as user_views
+from bahav import views as bahav_views
 
 urlpatterns = [
     # Homepage
-    url(r'^$', TemplateView.as_view(template_name='homepage.html'), name='homepage'),
+    url(r'^$', bahav_views.homepage, name='homepage'),
 
     # User Auth
     url(
@@ -42,4 +42,7 @@ urlpatterns = [
         name='signup',
     ),
     url(r'^account/$', user_views.account_info, name='account'),
+
+    # Profiles
+    url(r'^journeys/', include('profiles.urls', namespace='profiles')),
 ]

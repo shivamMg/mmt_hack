@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="ui container">
+  <div class="ui segement">
+    {{ profile.src_country.name }}<br>
+    {{ profile.dest_country.name }}<br>
+    {{ profile.range_start }}<br>
+    {{ profile.range_end }}<br>
+  </div>
+</div>
+
+{% endblock %}

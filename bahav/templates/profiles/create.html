@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+
+{% block stylesheets %}
+{{ super() }}
+<link rel="stylesheet" type="text/css" href="{{ static('lib/semantic-ui-calendar/dist/calendar.min.css') }}">
+{% endblock %}
+
+{% macro calendar_field(suffix, field) %}
+<div class="ui calendar" id="range{{ suffix }}">
+  <div class="ui input left icon">
+    <i class="calendar icon"></i>
+    {{ field }}
+  </div>
+</div>
+{% endmacro %}
+
+{% block content %}
+<div class="ui container upper-margin">
+  <div class="ui segment">
+    <form class="ui equal width form" method="post" action="">
+    {% csrf_token %}
+      <div style="padding-bottom:30px;">
+        <h2 class="ui left floated header">Create Journey</h2>
+        <button class="ui right floated button" type="submit">Create</button>
+      </div>
+      <div class="ui divider"></div>
+
+      {% for field in form %}
+        <div class="field">
+          {{ field.label_tag() }}
+          <span class="field-error">{{ field.errors.as_text() }}</span>
+          {% if field.name == 'src_country' or field.name == 'dest_country' %}
+            <div class="ui fluid search selection dropdown">
+              {{ field }}
+              <i class="dropdown icon"></i>
+              <div class="default text">{{ field.label_tag() }}</div>
+              <div class="menu">
+                {% include 'country_list.html' %}
+              </div>
+            </div>
+          {% elif field.name == 'range_start' %}
+            {{ calendar_field('start', field) }}
+          {% elif field.name == 'range_end' %}
+            {{ calendar_field('end', field) }}
+          {% else %}
+            {{ field }}
+          {% endif %}
+        </div>
+      {% endfor %}
+
+    </form>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+
+<script type="text/javascript" src="{{ static('lib/semantic-ui-calendar/dist/calendar.min.js') }}"></script>
+<script type="text/javascript">
+  $('#rangestart').calendar({
+    type: 'date',
+    endCalendar: $('#rangeend'),
+    formatter: {
+      date: function (date, settings) {
+        if (!date) return '';
+        var day = date.getDate();
+        var month = date.getMonth() + 1;
+        var year = date.getFullYear();
+        return month + '/' + day + '/' + year;
+      }
+    }
+  });
+  $('#rangeend').calendar({
+    type: 'date',
+    startCalendar: $('#rangestart'),
+    formatter: {
+      date: function (date, settings) {
+        if (!date) return '';
+        var day = date.getDate();
+        var month = date.getMonth() + 1;
+        var year = date.getFullYear();
+        return month + '/' + day + '/' + year;
+      }
+    }
+  });
+</script>
+{% endblock %}

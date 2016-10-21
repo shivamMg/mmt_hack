@@ -2,6 +2,8 @@
 
 {% block stylesheets %}
 {{ super() }}
+<link rel="stylesheet" type="text/css" href="{{ static('lib/semantic-ui-calendar/dist/calendar.min.css') }}">
+
 <style type="text/css">
   .masthead.segment {
     min-height: 700px;
@@ -30,10 +32,31 @@
 <div class="ui inverted vertical masthead center aligned segment midnight-bg">
   <div class="ui text container">
     <h1 class="ui inverted header">
-      bahav
-    </h1>
-    <h2>#TinderForTravellers</h2>
+      Bahav
+    </h1><br>
+
+    {% include 'profiles/_profile_search_form.html' %}
   </div>
 </div>
 
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+
+<script type="text/javascript" src="{{ static('lib/semantic-ui-calendar/dist/calendar.min.js') }}"></script>
+<script type="text/javascript">
+  $('#departure-date').calendar({
+    type: 'date',
+    formatter: {
+      date: function (date, settings) {
+        if (!date) return '';
+        var day = date.getDate();
+        var month = date.getMonth() + 1;
+        var year = date.getFullYear();
+        return month + '/' + day + '/' + year;
+      }
+    }
+  });
+</script>
 {% endblock %}

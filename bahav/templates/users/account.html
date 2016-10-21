@@ -21,11 +21,7 @@
               <i class="dropdown icon"></i>
               <div class="default text">Your Country</div>
               <div class="menu">
-                {% for country in list_countries() %}
-                  <div class="item" data-value="{{ country.code }}" title="{{ country.name }}, {{ country.continent.name }}">
-                    <i class="{{ country.code|lower }} flag"></i>{{ country.name }}
-                  </div>
-                {% endfor %}
+                {% include 'country_list.html' %}
               </div>
             </div>
           {% else %}
