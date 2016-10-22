@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'channels',
     'django_jinja',
     'countries',
     'users',
@@ -77,6 +78,17 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'bahav.wsgi.application'
 
+# Django Channels
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "asgi_redis.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [os.environ.get('REDIS_URL', 'redis://localhost:6379')],
+        },
+        # "ROUTING": "chats.routing.channel_routing",
+        "ROUTING": "profiles.routing.channel_routing",
+    },
+}
 
 # Database
 # https://docs.djangoproject.com/en/1.10/ref/settings/#databases

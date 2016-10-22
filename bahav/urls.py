@@ -21,28 +21,31 @@ from bahav import views as bahav_views
 
 urlpatterns = [
     # Homepage
-    url(r'^$', bahav_views.homepage, name='homepage'),
+    url(r'^$', bahav_views.homepage,
+        name='homepage'),
 
     # User Auth
-    url(
-        r'^login/$',
+    url(r'^login/$',
         auth_views.login,
         name='login',
-        kwargs={'template_name': 'users/login.html'},
-    ),
-    url(
-        r'^logout/$',
+        kwargs={'template_name': 'users/login.html'}, ),
+    url(r'^logout/$',
         auth_views.logout,
         name='logout',
-        kwargs={'next_page': '/'},
-    ),
-    url(
-        r'^signup/$',
+        kwargs={'next_page': '/'}, ),
+    url(r'^signup/$',
         user_views.signup,
-        name='signup',
-    ),
-    url(r'^account/$', user_views.account_info, name='account'),
+        name='signup', ),
+    url(r'^account/$', user_views.account_info,
+        name='account'),
 
-    # Profiles
-    url(r'^journeys/', include('profiles.urls', namespace='profiles')),
+    # Journey Profiles
+    url(r'^journeys/',
+        include('profiles.urls.profiles',
+                namespace='profiles')),
+
+    # Journey Profile
+    url(r'^j/(?P<profile_id>[a-z0-9]+)/',
+        include('profiles.urls.profile',
+                namespace='profile'))
 ]
