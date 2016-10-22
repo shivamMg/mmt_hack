@@ -1,20 +1,8 @@
 {% extends "base.html" %}
 
-{% block stylesheets %}
-{{ super() }}
-<style>
-  body > .grid {
-    height: 100%;
-  }
-  .column {
-    max-width: 450px;
-  }
-</style>
-{% endblock %}
-
 {% block content %}
-<div class="ui middle aligned center aligned grid">
-  <div class="column">
+<div class="ui grid stackable container centered">
+  <div class="six wide column">
 
 <form class="ui form" method="post" action="{{ url('signup') }}">
 {% csrf_token %}
@@ -55,17 +43,7 @@
   <input type="hidden" name="next" value="{{ next }}" />
 </form>
 
-<div class="ui buttons">
-    <a href="/login/facebook" class="ui facebook button">
-        <i class="facebook icon"></i>
-        Continue with Facebook
-    </a>
-    <div class="or"></div>
-    <a href="/login/google-oauth2" class="ui google plus button">
-        <i class="google plus icon"></i>
-        Continue with Google+
-    </a>
-</div>
+{% include 'users/_social_signup.html' %}
 
 <div class="ui info message">
   Already have an account? Login <a href="{{ url('login') }}">here</a>.

@@ -2,20 +2,6 @@
   <div class="ui white small menu">
 
       <a href="/" class="item header">Bahav</a>
-      <div class="ui selection dropdown item">
-        <input type="hidden" name="country">
-        <div class="text">
-        {% if user.is_authenticated() %}
-          <i class="{{ user.country.code | lower }} flag"></i>{{ user.country.name }}
-        {% else %}
-          <i class="in flag"></i>India
-        {% endif %}
-        </div>
-
-        <div class="menu">
-          {% include 'country_list.html' %}
-        </div>
-      </div>
 
       <div class="right menu">
       {% if user.is_authenticated() %}

@@ -1,20 +1,8 @@
 {% extends "base.html" %}
 
-{% block stylesheets %}
-{{ super() }}
-<style>
-  body > .grid {
-    height: 100%;
-  }
-  .column {
-    max-width: 450px;
-  }
-</style>
-{% endblock %}
-
 {% block content %}
-<div class="ui middle aligned center aligned grid">
-  <div class="column">
+<div class="ui grid stackable container centered">
+  <div class="six wide column">
 
   {% if form.errors %}
     <div class="ui error message">
@@ -57,22 +45,13 @@
     <input type="hidden" name="next" value="{{ next }}" />
   </form>
 
-  <div class="ui buttons">
-      <a href="/login/facebook" class="ui facebook button">
-          <i class="facebook icon"></i>
-          Continue with Facebook
-      </a>
-      <div class="or"></div>
-      <a href="/login/google-oauth2" class="ui google plus button">
-          <i class="google plus icon"></i>
-          Continue with Google+
-      </a>
-  </div>
+  {% include 'users/_social_signup.html' %}
 
   <div class="ui info message">
     New user? You can create an account <a href="{{ url('signup') }}">here</a>.
   </div>
 
   </div>
+
 </div>
 {% endblock %}
