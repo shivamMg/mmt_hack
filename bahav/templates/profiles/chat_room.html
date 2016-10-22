@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block stylesheets %}
+{{ super() }}
+
+<link rel="stylesheet" href="{{ static('profiles/css/chat.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="ui container upper-margin">
+  <div class="ui segment">
+    <form id="chatform">
+      <table id="chat">
+        <tbody>
+          {% for message in message_list %}
+            <tr>
+              <td>{{ message.formatted_timestamp }}</td>
+              <td>{{ message.user.email }}</td>
+              <td>{{ message.message }}</td>
+            </tr> 
+          {% endfor %}
+        </tbody>
+        <tfoot>
+          <tr>
+            <td>Say something:</td>
+            <td colspan=2>
+              <input id="message" type="text" placeholder="message" autocomplete="off">
+              <button type="submit" id="go">Send</button>
+            </td>
+          </tr>
+        </tfoot>
+      </table>
+    </form>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+  <script type="text/javascript" src='{{ static("profiles/js/reconnecting-websocket.min.js") }}'></script>
+  <script type="text/javascript" src='{{ static("profiles/js/chat.js") }}'></script>
+{% endblock %}

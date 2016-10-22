@@ -1,11 +1,20 @@
 from django.shortcuts import render, HttpResponseRedirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
+from django.core.urlresolvers import reverse
 from django.utils.http import base36_to_int
 
 from profiles.forms import SearchForm, CreationForm
-from profiles.models import Profile
+from profiles.models import Profile, Room
 from users.models import User
+
+
+def get_profile_base36(base36_id):
+    """Returns Profile using base36 profile id
+    """
+    int_id = base36_to_int(base36_id)
+    profile = get_object_or_404(Profile, id=int_id)
+    return profile
 
 
 @login_required
@@ -25,7 +34,8 @@ def search(request):
                 **options)
 
             return render(request, 'profiles/search.html',
-                    {'profile_list': profile_list, 'search_form': form})
+                          {'profile_list': profile_list,
+                           'search_form': form})
         else:
             print(form.errors)
             return render(request, 'homepage.html', {'search_form': form})
@@ -52,7 +62,26 @@ def create(request):
 
 @login_required
 def view(request, profile_id):
-    int_id = base36_to_int(profile_id)
-    profile = get_object_or_404(Profile, id=int_id)
+    profile = get_profile_base36(profile_id)
 
     return render(request, 'profiles/view.html', {'profile': profile})
+
+
+@login_required
+def chat(request, profile_id):
+    user = request.user
+    profile = get_profile_base36(profile_id)
+    room, created = Room.objects.get_or_create(profile=profile)
+
+    # If room was just created, add profile creator to members list
+    if created:
+        room.members.add(profile.creator)
+
+    # Check if current user is a member of the room
+    if user not in room.members.all():
+        return HttpResponseRedirect(reverse('profile:view', args=(profile_id,)))
+
+    message_list = reversed(room.messages.order_by('-timestamp')[:50])
+
+    return render(request, 'profiles/chat_room.html',
+                  {'message_list': message_list})
