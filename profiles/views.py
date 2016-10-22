@@ -1,6 +1,7 @@
 from django.shortcuts import render, HttpResponseRedirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
+from django.core.urlresolvers import reverse
 from django.utils.http import base36_to_int
 
 from profiles.forms import SearchForm, CreationForm
@@ -66,10 +67,20 @@ def view(request, profile_id):
     return render(request, 'profiles/view.html', {'profile': profile})
 
 
+@login_required
 def chat(request, profile_id):
+    user = request.user
     profile = get_profile_base36(profile_id)
+    room, created = Room.objects.get_or_create(profile=profile)
 
-    room, _ = Room.objects.get_or_create(profile=profile)
+    # If room was just created, add profile creator to members list
+    if created:
+        room.members.add(profile.creator)
+
+    # Check if current user is a member of the room
+    if user not in room.members.all():
+        return HttpResponseRedirect(reverse('profile:view', args=(profile_id,)))
+
     message_list = reversed(room.messages.order_by('-timestamp')[:50])
 
     return render(request, 'profiles/chat_room.html',
