@@ -57,6 +57,18 @@
     <input type="hidden" name="next" value="{{ next }}" />
   </form>
 
+  <div class="ui buttons">
+      <a href="/login/facebook" class="ui facebook button">
+          <i class="facebook icon"></i>
+          Continue with Facebook
+      </a>
+      <div class="or"></div>
+      <a href="/login/google-oauth2" class="ui google plus button">
+          <i class="google plus icon"></i>
+          Continue with Google+
+      </a>
+  </div>
+
   <div class="ui info message">
     New user? You can create an account <a href="{{ url('signup') }}">here</a>.
   </div>

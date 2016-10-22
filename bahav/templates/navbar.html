@@ -19,7 +19,7 @@
 
       <div class="right menu">
       {% if user.is_authenticated() %}
-        <a href="{{ url('account') }}" class="item">{{ user.username }}</a>
+        <a href="{{ url('account') }}" class="item">{{ user.first_name }}</a>
         <div class="item">
           <a href="{{ url('logout') }}" class="ui button">Logout</a>
         </div>

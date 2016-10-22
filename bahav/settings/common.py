@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'social.apps.django_app.default',
     'django_jinja',
     'countries',
     'users',
@@ -70,6 +71,8 @@ TEMPLATES = [
                 'django.template.context_processors.static',
                 'django.contrib.messages.context_processors.messages',
                 'django.template.context_processors.tz',
+                'social.apps.django_app.context_processors.backends',
+                'social.apps.django_app.context_processors.login_redirect',
             ],
         },
     },
@@ -109,6 +112,42 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
+AUTHENTICATION_BACKENDS = [
+    'social.backends.facebook.FacebookOAuth2',
+    'social.backends.google.GoogleOAuth2',
+    'django.contrib.auth.backends.ModelBackend',
+]
+
+
+# Social Auth
+
+SOCIAL_AUTH_LOGIN_REDIRECT_URL = '/'
+SOCIAL_AUTH_LOGIN_URL = '/'
+SOCIAL_AUTH_TWITTER_KEY = SECRETS.get('twitter_key')
+SOCIAL_AUTH_TWITTER_SECRET = SECRETS.get('twitter_secret')
+SOCIAL_AUTH_FACEBOOK_KEY = SECRETS.get('facebook_key')
+SOCIAL_AUTH_FACEBOOK_SECRET = SECRETS.get('facebook_secret')
+SOCIAL_AUTH_FACEBOOK_SCOPE = ['email']
+SOCIAL_AUTH_FACEBOOK_PROFILE_EXTRA_PARAMS = {
+    'fields': 'email, first_name, middle_name, last_name'
+}
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = SECRETS.get('google_key')
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = SECRETS.get('google_secret')
+
+SOCIAL_AUTH_PIPELINE = (
+    'social.pipeline.social_auth.social_details',
+    'social.pipeline.social_auth.social_uid',
+    'social.pipeline.social_auth.auth_allowed',
+    'social.pipeline.social_auth.social_user',
+    'social.pipeline.user.get_username',
+    'social.pipeline.social_auth.associate_by_email',
+    'social.pipeline.user.create_user',
+    'social.pipeline.social_auth.associate_user',
+    'social.pipeline.social_auth.load_extra_data',
+    'social.pipeline.user.user_details',
+)
+
 
 
 # Internationalization

@@ -5,7 +5,7 @@ from countries.models import Country
 
 
 class UserManager(BaseUserManager):
-    def create_user(self, username, email, country, password):
+    def create_user(self, username, email, country="1", password=None):
         if not username:
             raise ValueError('User must have a username')
         if not email:
@@ -44,7 +44,7 @@ class User(AbstractBaseUser):
     is_superuser = models.BooleanField(default=False)
 
     USERNAME_FIELD = 'username'
-    REQUIRED_FIELDS = ['email', 'country']
+    REQUIRED_FIELDS = ['email']
 
     objects = UserManager()
 

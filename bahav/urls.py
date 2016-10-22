@@ -43,6 +43,9 @@ urlpatterns = [
     ),
     url(r'^account/$', user_views.account_info, name='account'),
 
+    # Social Auth
+    url('', include('social.apps.django_app.urls', namespace='social')),
+
     # Profiles
     url(r'^journeys/', include('profiles.urls', namespace='profiles')),
 ]
