@@ -54,6 +54,6 @@ class Message(models.Model):
         return self.timestamp.strftime('%b %-d %-I:%M %p')
 
     def as_dict(self):
-        return {'user': self.user.email,
+        return {'user': self.user.get_full_name(),
                 'message': self.message,
                 'timestamp': self.formatted_timestamp}

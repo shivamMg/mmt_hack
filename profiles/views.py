@@ -80,9 +80,11 @@ def chat(request, profile_id):
 
     # Check if current user is a member of the room
     if user not in room.members.all():
-        return HttpResponseRedirect(reverse('profile:view', args=(profile_id,)))
+        return HttpResponseRedirect(reverse('profile:view',
+                                            args=(profile_id, )))
 
     message_list = reversed(room.messages.order_by('-timestamp')[:50])
 
     return render(request, 'profiles/chat_room.html',
-                  {'message_list': message_list})
+                  {'message_list': message_list,
+                   'room': room})

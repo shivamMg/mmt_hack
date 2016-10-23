@@ -26,7 +26,7 @@
           <div class="ui dimmer">
             <div class="content">
               <div class="center">
-                <div class="ui inverted button">Add Friend</div>
+                <button class="ui inverted button send-request-button">Send Request</button>
               </div>
             </div>
           </div>
@@ -77,9 +77,14 @@
 <script type="text/javascript" src="{{ static('lib/semantic-ui-calendar/dist/calendar.min.js') }}"></script>
 <script type="text/javascript" src="{{ static('profiles/js/search-form.js') }}"></script>
 <script type="text/javascript">
-  $('.special.cards .image').dimmer({
+  $(".special.cards .image").dimmer({
     on: 'hover'
   });
   $(".country-flag").popup();
+  $(".send-request-button").on("click", function() {
+    console.log('shit');
+    msg = '<h4 class="ui inverted header">Membership request has been sent</h4>';
+    $(this).parent().hide().html(msg).fadeIn();
+  });
 </script>
 {% endblock %}

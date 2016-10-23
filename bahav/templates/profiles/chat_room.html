@@ -3,34 +3,79 @@
 {% block stylesheets %}
 {{ super() }}
 
-<link rel="stylesheet" href="{{ static('profiles/css/chat.css') }}">
+<link rel="stylesheet" href="{{ static('profiles/css/chat-room.css') }}">
 {% endblock %}
 
+{% macro message(author='', date='', text='') %}
+<div class="comment">
+  <a class="avatar">
+    <img src="{{ static('base/images/elliot.jpg') }}">
+  </a>
+  <div class="content">
+    <a class="author">{{ author }}</a>
+    <div class="metadata">
+      <div class="date">{{ date }}</div>
+    </div>
+    <div class="text">
+      <p>
+        {{ text }}
+      </p>
+    </div>
+    <div class="actions">
+      <a class="hide">Hide</a>
+    </div>
+  </div>
+</div>
+{% endmacro %}
+
 {% block content %}
+<!-- Message Template -->
+<div style="display: none;" id="message-template">
+  {{ message() }}
+</div>
+
+
 <div class="ui container upper-margin">
   <div class="ui segment">
-    <form id="chatform">
-      <table id="chat">
-        <tbody>
-          {% for message in message_list %}
-            <tr>
-              <td>{{ message.formatted_timestamp }}</td>
-              <td>{{ message.user.email }}</td>
-              <td>{{ message.message }}</td>
-            </tr> 
+    <div class="ui grid">
+      <div class="ten wide column">
+        <h3 class="ui header">Room Chat</h3>
+        <div id="chat-messages-container">
+          <div class="ui comments" id="chat-messages">
+          {% for m in message_list %}
+            {{ message(m.user.get_full_name(), m.formatted_timestamp, m.message) }}
           {% endfor %}
-        </tbody>
-        <tfoot>
-          <tr>
-            <td>Say something:</td>
-            <td colspan=2>
-              <input id="message" type="text" placeholder="message" autocomplete="off">
-              <button type="submit" id="go">Send</button>
-            </td>
-          </tr>
-        </tfoot>
-      </table>
-    </form>
+          </div>
+        </div>
+        <form class="ui reply grid form" id="chatform">
+          <div class="twelve wide field">
+            <textarea id="message" placeholder="Enter your message..." rows="4"></textarea>
+          </div>
+          <div class="four wide field">
+            <button class="ui primary submit labeled icon button">
+              <i class="icon send outline"></i> Send
+            </button>
+          </div>
+        </form>
+      </div>
+      <div class="six wide column">
+        <h3 class="ui grey header">Members</h3>
+        <div class="ui middle aligned animated list">
+        {% for member in room.members.all() %}
+          <div class="item">
+            <img class="ui avatar image" src="{{ static('base/images/elliot.jpg') }}">
+            <div class="content">
+              <div class="header">{{ member.get_full_name() }}</div>
+            </div>
+          </div>
+        {% endfor %}
+        </div>
+        <div class="ui labeled icon basic button">
+          <i class="icon add user"></i>
+          Invite
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 {% endblock %}

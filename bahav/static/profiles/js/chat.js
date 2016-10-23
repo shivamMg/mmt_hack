@@ -5,28 +5,25 @@ $(function() {
     
     chatsock.onmessage = function(message) {
         var data = JSON.parse(message.data);
-        var chat = $("#chat");
-        var ele = $('<tr></tr>');
+        var $chat = $("#chat-messages");
 
-        ele.append(
-            $("<td></td>").text(data.timestamp)
-        );
-        ele.append(
-            $("<td></td>").text(data.user)
-        );
-        ele.append(
-            $("<td></td>").text(data.message)
-        );
-        
-        chat.append(ele);
+        var $msg = $("#message-template").children().clone();
+        $msg.find(".author").html(data.user);
+        $msg.find(".date").html(data.timestamp);
+        $msg.find(".text").html("<p>"+data.message+"</p>");
+
+        $chat.append($msg);
+        $chat.scrollTop($chat[0].scrollHeight);
     };
 
     $("#chatform").on("submit", function(event) {
+        event.preventDefault();
         var message = {
             message: $('#message').val(),
         };
         chatsock.send(JSON.stringify(message));
         $("#message").val('').focus();
+
         return false;
     });
 });
