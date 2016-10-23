@@ -26,7 +26,8 @@ class SearchForm(forms.Form):
     departure_date = forms.DateField(
         label='Departure Date',
         widget=forms.TextInput(
-            attrs={'placeholder': 'Probable departure date'}))
+            attrs={'placeholder': 'Probable departure date'}),
+        required=False)
 
     def clean_src_country(self):
         country_code = self.cleaned_data.get('src_country')

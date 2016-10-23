@@ -1,13 +1,14 @@
-<form method="get" action="{{ url('profiles:search') }}">
+<form method="get" action="{{ url('profiles:search') }}" id="profile-search-form">
 <div class="ui form">
   <div class="two fields">
     <div class="field">
       <div class="ui fluid search selection dropdown">
         {{ search_form.src_country }}
         <i class="dropdown icon"></i>
-        <div class="default text"> Source Country</div>
+        <input class="search" autocomplete="off" tabindex="0" id="src-country-search">
+        <div class="default text">Source Country</div>
         <div class="menu">
-          {% include 'country_list.html' %}
+          {% include '_country_list.html' %}
         </div>
       </div>
     </div>
@@ -15,9 +16,10 @@
       <div class="ui fluid search selection dropdown">
         {{ search_form.dest_country }}
         <i class="dropdown icon"></i>
+        <input class="search" autocomplete="off" tabindex="0" id="dest-country-search">
         <div class="default text">Destination Country</div>
         <div class="menu">
-          {% include 'country_list.html' %}
+          {% include '_country_list.html' %}
         </div>
       </div>
     </div>
@@ -32,7 +34,7 @@
       </div>
     </div>
     <div class="field">
-      <button class="ui fluid button">Go</button>
+      <button class="ui fluid button profile-search-button">Go</button>
     </div>
   </div>
 </div>

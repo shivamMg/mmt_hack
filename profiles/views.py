@@ -38,7 +38,7 @@ def search(request):
                            'search_form': form})
         else:
             print(form.errors)
-            return render(request, 'homepage.html', {'search_form': form})
+            return HttpResponseRedirect('/')
     else:
         return HttpResponseRedirect('/')
 
@@ -55,6 +55,11 @@ def create(request):
             profile = form.save(commit=False)
             profile.creator = user
             profile.save()
+
+            # Create Room for Profile, add creator as a member
+            room = Room.objects.create(profile=profile)
+            room.members.add(user)
+
             return HttpResponseRedirect(profile.get_absolute_url())
 
     return render(request, 'profiles/create.html', {'form': form})
@@ -71,11 +76,7 @@ def view(request, profile_id):
 def chat(request, profile_id):
     user = request.user
     profile = get_profile_base36(profile_id)
-    room, created = Room.objects.get_or_create(profile=profile)
-
-    # If room was just created, add profile creator to members list
-    if created:
-        room.members.add(profile.creator)
+    room = Room.objects.get(profile=profile)
 
     # Check if current user is a member of the room
     if user not in room.members.all():

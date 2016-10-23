@@ -19,6 +19,11 @@ class Profile(models.Model):
         base36_id = int_to_base36(self.id)
         return '/j/{}'.format(base36_id)
 
+    def get_range(self):
+        format_ = '%b %d, %Y'
+        return (self.range_start.strftime(format_),
+                self.range_end.strftime(format_), )
+
     def __str__(self):
         return 'profile_{}'.format(self.id)
 
@@ -26,7 +31,7 @@ class Profile(models.Model):
 class Room(models.Model):
     """Chat Room
     """
-    profile = models.OneToOneField(Profile)
+    profile = models.OneToOneField(Profile, related_name='room')
     members = models.ManyToManyField(User)
 
     def __str__(self):

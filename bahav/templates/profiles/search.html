@@ -6,34 +6,67 @@
 {% endblock %}
 
 {% block content %}
-<div class="ui segment">
-  <div class="ui container">
-  {% include 'profiles/_profile_search_form.html' %}
+<div class="ui segment ninja-blue-bg" style="padding-top: 40px; margin-top: 0; border-radius: 0; margin-bottom: 0;">
+  <div class="ui container stackable grid">
+    <div class="ui four wide column">
+      <h2 class="ui inverted header">Find<br>Journeys</h2>  
+    </div>
+    <div class="ui twelve wide column">
+    {% include 'profiles/_profile_search_form.html' %}
+    </div>
   </div>
 </div>
 
-<div>
-  <div class="ui segment" style="min-height: 200px;">
-    <div class="ui cards">
+<div class="ui segment" style="min-height: 300px; margin-top: 0; padding-top: 40px; padding-bottom: 40px;">
+  <div class="ui container">
+    <div class="ui special cards">
     {% for profile in profile_list %}
       <div class="card">
+        <div class="blurring dimmable image">
+          <div class="ui dimmer">
+            <div class="content">
+              <div class="center">
+                <div class="ui inverted button">Add Friend</div>
+              </div>
+            </div>
+          </div>
+          <img src="{{ static('base/images/elliot.jpg') }}">
+        </div>
         <div class="content">
-          <div class="header">{{ profile.src_country.name }}</div>
-          <div class="meta">{{ profile.dest_country.name }}</div>
-          <div class="description">
-            <ul>
-              <li>{{ profile.range_start }}</li>
-              <li>{{ profile.range_end }}</li>
-            </ul>
+          <a class="header"></a>
+          <div class="meta">
+            <span>Journey Creator: {{ profile.creator.get_full_name()|title }}</span>
+            <div>
+              <i class="{{ profile.src_country.code|lower }} flag country-flag"
+                data-content="{{ profile.src_country.name }}" data-variation="small"></i>
+              <i class="icon exchange"></i>
+              <i class="{{ profile.dest_country.code|lower }} flag country-flag"
+                data-content="{{ profile.dest_country.name }}" data-variation="small"></i>
+            </div><br>
+            <div>
+              Departure date range:<br>{{ profile.get_range()|join(' - ') }}
+            </div>
           </div>
         </div>
+        <div class="extra content">
+          <a>
+            <i class="users icon"></i>
+            {% set members = profile.room.members.all() %}
+            {{ members|length }} Traveller{{ 's' if members|length > 1 else '' }}
+          </a>
+        </div>
       </div>
-    {% else %}
-    <div>
-        Sorry no Journies match the above parameters. You can <a href="">create your own journey</a>.
-    </div>
     {% endfor %}
     </div>
+    {% if not profile_list %}
+    <div>
+      <br>
+      <h3 class="ui grey header centered">
+        Sorry no Journeys were found.<br>
+        You can create your own <a href="{{ url('profiles:create') }}">Journey</a> :)
+      </h3>
+    </div>
+    {% endif %}
   </div>
 </div>
 {% endblock %}
@@ -42,18 +75,11 @@
 {{ super() }}
 
 <script type="text/javascript" src="{{ static('lib/semantic-ui-calendar/dist/calendar.min.js') }}"></script>
+<script type="text/javascript" src="{{ static('profiles/js/search-form.js') }}"></script>
 <script type="text/javascript">
-  $('#departure-date').calendar({
-    type: 'date',
-    formatter: {
-      date: function (date, settings) {
-        if (!date) return '';
-        var day = date.getDate();
-        var month = date.getMonth() + 1;
-        var year = date.getFullYear();
-        return month + '/' + day + '/' + year;
-      }
-    }
+  $('.special.cards .image').dimmer({
+    on: 'hover'
   });
+  $(".country-flag").popup();
 </script>
 {% endblock %}

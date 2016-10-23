@@ -1,21 +1,25 @@
 body {
-  background-color: #f6f0ee;
+  background-color: #eceff1;
 }
 
-a:hover {
-  color: #2b1b17;
+.ninja-blue-bg {
+  background-color: #544FB5 !important;
 }
 
-.midnight-bg {
-  background-color: #2b1b17 !important;
+.profile-search-button {
+  background-color: #ffffff !important;
+}
+
+.profile-search-button:hover {
+  background-color: #dcdcdc !important;
 }
 
 .ui.primary.button {
-  background-color: #422a24;
+  background-color: #544FB5;
 }
 
 .ui.primary.button:hover {
-  background-color: #2b1b17;
+  background-color: #4844a2;
 }
 
 .upper-margin {

@@ -29,7 +29,7 @@
 {% endblock %}
 
 {% block content %}
-<div class="ui inverted vertical masthead center aligned segment midnight-bg">
+<div class="ui inverted vertical masthead center aligned segment ninja-blue-bg">
   <div class="ui text container">
     <h1 class="ui inverted header">
       Bahav
@@ -45,18 +45,5 @@
 {{ super() }}
 
 <script type="text/javascript" src="{{ static('lib/semantic-ui-calendar/dist/calendar.min.js') }}"></script>
-<script type="text/javascript">
-  $('#departure-date').calendar({
-    type: 'date',
-    formatter: {
-      date: function (date, settings) {
-        if (!date) return '';
-        var day = date.getDate();
-        var month = date.getMonth() + 1;
-        var year = date.getFullYear();
-        return month + '/' + day + '/' + year;
-      }
-    }
-  });
-</script>
+<script type="text/javascript" src="{{ static('profiles/js/search-form.js') }}"></script>
 {% endblock %}
