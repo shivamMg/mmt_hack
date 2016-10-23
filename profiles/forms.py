@@ -48,11 +48,19 @@ class CreationForm(forms.ModelForm):
 
     class Meta:
         model = Profile
-        fields = ('range_start',
+        fields = ('title', 'description','range_start',
                   'range_end', )
         labels = {
+            'title': _('Title'),
+            'description': _('Description'),
             'range_start': _('Range Start'),
             'range_end': _('Range End'),
+        }
+        help_texts = {
+            'title': 'Journey title',
+            'description': 'A simple journey description that can include places you would visit',
+            'range_start': 'Date range for your probable departure date',
+            'range_end': 'Date range for your probable departure date',
         }
 
     def clean_src_country(self):

@@ -1,12 +1,58 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="ui container">
-  <div class="ui segement">
-    {{ profile.src_country.name }}<br>
-    {{ profile.dest_country.name }}<br>
-    {{ profile.range_start }}<br>
-    {{ profile.range_end }}<br>
+<div class="ui container upper-margin">
+  <div class="ui segment" style="min-height: 600px;">
+  <div class="ui grid">
+    <div class="ui six wide column">
+      <div class="ui card">
+        <div class="content">
+          <div class="right floated meta"></div>
+          <img class="ui avatar image" src="{{ static('base/images/elliot.jpg') }}"> {{ profile.creator.get_full_name() }}
+        </div>
+        <div class="image">
+          <img src="{{ static('base/images/taj-mahal.jpg') }}">
+        </div>
+        <div class="content">
+          <span class="right floated">
+            <i class="heart outline like icon"></i>
+            29 likes
+          </span>
+          <i class="users icon"></i>
+          {% set members = profile.room.members.all() %}
+          {{ members|length }} Traveller{{ 's' if members|length > 1 else '' }}
+        </div>
+        <div class="extra content">
+          <div class="ui large transparent left icon input">
+            {{ profile.get_range()|join(' - ') }}
+          </div>
+        </div>
+      </div>
+
+      <div class="ui middle aligned animated list">
+      {% for member in profile.room.members.all() %}
+        <div class="item">
+          <img class="ui avatar image" src="{{ static('base/images/elliot.jpg') }}">
+          <div class="content">
+            <div class="header">{{ member.get_full_name() }}</div>
+          </div>
+        </div>
+      {% endfor %}
+      </div>
+    </div>
+    <div class="ui ten wide column">
+      <p>{{ profile.title }}</p>
+      <pre>{{ profile.description }}</pre>
+      <h2 class="ui header grey">
+        {{ profile.src_country.name }}
+        <i class="{{ profile.src_country.code|lower }} flag country-flag"></i>
+      </h2>
+      <h2 class="ui header grey">
+        {{ profile.dest_country.name }}
+        <i class="{{ profile.dest_country.code|lower }} flag country-flag"></i>
+      </h2>
+    </div>
+  </div>
   </div>
 </div>
 

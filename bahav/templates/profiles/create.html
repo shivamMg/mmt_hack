@@ -28,6 +28,7 @@
       {% for field in form %}
         <div class="field">
           {{ field.label_tag() }}
+          <span style="color: #a9a9a9;">{{ field.help_text }}</span>
           <span class="field-error">{{ field.errors.as_text() }}</span>
           {% if field.name == 'src_country' or field.name == 'dest_country' %}
             <div class="ui fluid search selection dropdown">

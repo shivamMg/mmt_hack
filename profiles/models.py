@@ -13,6 +13,8 @@ class Profile(models.Model):
     dest_country = models.ForeignKey(Country, related_name='dest_country')
     range_start = models.DateField()
     range_end = models.DateField()
+    title = models.CharField(max_length=60)
+    description = models.TextField()
     creator = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def get_absolute_url(self):
