@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'social.apps.django_app.default',
-    'channels',
+    #'channels',
     'django_jinja',
     'countries',
     'users',
@@ -128,22 +128,46 @@ AUTH_PASSWORD_VALIDATORS = [
 AUTHENTICATION_BACKENDS = [
     'social.backends.facebook.FacebookOAuth2',
     'social.backends.google.GoogleOAuth2',
+    'social.backends.google.GooglePlusAuth',
+    'social.backends.twitter.TwitterOAuth',
     'django.contrib.auth.backends.ModelBackend',
 ]
 
+LOGIN_REDIRECT_URL = '/'
+LOGIN_URL = '/login/'
+
+AUTH_USER_MODEL = 'users.User'
 
 # Social Auth
 
+SOCIAL_AUTH_STRATEGY = 'social.strategies.django_strategy.DjangoStrategy'
+SOCIAL_AUTH_STORAGE = 'social.apps.django_app.default.models.DjangoStorage'
+
 SOCIAL_AUTH_LOGIN_REDIRECT_URL = '/'
 SOCIAL_AUTH_LOGIN_URL = '/'
+
+# Facebook
 SOCIAL_AUTH_FACEBOOK_KEY = SECRETS.get('facebook_key')
 SOCIAL_AUTH_FACEBOOK_SECRET = SECRETS.get('facebook_secret')
 SOCIAL_AUTH_FACEBOOK_SCOPE = ['email']
 SOCIAL_AUTH_FACEBOOK_PROFILE_EXTRA_PARAMS = {
     'fields': 'email, first_name, middle_name, last_name'
 }
+
+# Google OAuth2
 SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = SECRETS.get('google_key')
 SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = SECRETS.get('google_secret')
+
+# Google plus
+SOCIAL_AUTH_GOOGLE_PLUS_KEY = SECRETS.get('google_key')
+SOCIAL_AUTH_GOOGLE_PLUS_SECRET = SECRETS.get('google_secret')
+
+# Twitter
+# You need to elevate permissions for getting email
+# https://stackoverflow.com/questions/22627083
+SOCIAL_AUTH_TWITTER_KEY = SECRETS.get('twitter_key')
+SOCIAL_AUTH_TWITTER_SECRET = SECRETS.get('twitter_secret')
+
 
 SOCIAL_AUTH_PIPELINE = (
     'social.pipeline.social_auth.social_details',
@@ -184,11 +208,6 @@ STATICFILES_DIRS = [
 
 # Media
 MEDIA_URL = '/media/'
-
-LOGIN_REDIRECT_URL = '/'
-LOGIN_URL = '/login/'
-
-AUTH_USER_MODEL = 'users.User'
 
 MEDIA_ROOT = os.path.join(DATA_DIR, 'media_root')
 STATIC_ROOT = os.path.join(DATA_DIR, 'static_root')

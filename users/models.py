@@ -5,7 +5,7 @@ from countries.models import Country
 
 
 class UserManager(BaseUserManager):
-    def create_user(self, username, email, password=None):
+    def create_user(self, username, email, password=None, country='1'):
         if not username:
             raise ValueError('User must have a username')
         if not email:
@@ -15,7 +15,7 @@ class UserManager(BaseUserManager):
 
         user = self.model(username=username, email=self.normalize_email(email))
         user.set_password(password)
-        # user.country = Country.objects.get(pk=country)
+        user.country = Country.objects.get(pk=country)
         user.save(using=self._db)
         return user
 
@@ -30,7 +30,7 @@ class UserManager(BaseUserManager):
 
 
 class User(AbstractBaseUser):
-    username = models.SlugField(max_length=20, unique=True)
+    username = models.SlugField(max_length=1000, unique=True)
     email = models.EmailField(unique=True)
     first_name = models.CharField(max_length=15, blank=True)
     middle_name = models.CharField(max_length=15, blank=True)
