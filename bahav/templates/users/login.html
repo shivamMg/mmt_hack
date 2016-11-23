@@ -4,6 +4,27 @@
 <div class="ui grid stackable container centered">
   <div class="six wide column">
 
+  {% if backend and require_email %}
+    <div class="ui modal">
+      <div class="header">Required Email</div>
+      <div class="content">
+      <form class="ui form" method="post" action="{{ url('social:complete', backend=backend) }}">
+      {% csrf_token %}
+        <div class="field">
+          <label>Email
+            <input type="email" name="email">
+          </label>
+        </div>
+        <div class="field">
+          <button class="ui positive button submit">
+            Continue
+          </button>
+        </div>
+      </form>
+      </div>
+    </div>
+  {% endif %}
+
   {% if form.errors %}
     <div class="ui error message">
       Your username and password didn't match. Please try again.
@@ -62,6 +83,8 @@
 <script src="https://apis.google.com/js/api:client.js"></script>
 
 <script type="text/javascript">
+  $(".ui.modal").modal("show");
+
   gapi.load('auth2', function () {
     var auth2;
 

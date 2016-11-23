@@ -36,6 +36,9 @@ urlpatterns = [
     url(r'^signup/$',
         user_views.signup,
         name='signup', ),
+    url(r'^require_email/$',
+        user_views.require_email,
+        name='require_email'),
     url(r'^account/$', user_views.account_info,
         name='account'),
 

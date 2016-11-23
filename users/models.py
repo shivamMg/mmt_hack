@@ -36,6 +36,8 @@ class User(AbstractBaseUser):
     middle_name = models.CharField(max_length=15, blank=True)
     last_name = models.CharField(max_length=15, blank=True)
 
+    photo = models.ImageField(upload_to='user_photos')
+
     country = models.ForeignKey(Country)
 
     is_active = models.BooleanField(default=True)
